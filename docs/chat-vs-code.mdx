@@ -1,0 +1,49 @@
+# Chat vs Code
+
+cbug skills work in both Claude Chat and Claude Code — but each environment has different strengths.
+
+## When to use Claude Chat
+
+**Best for:** Static code review, report drafting, learning attack patterns
+
+| Task | Chat |
+|---|---|
+| Review a code file for vulnerabilities | ✓ |
+| Analyze a JWT or OAuth flow | ✓ |
+| Draft a bug bounty report | ✓ |
+| Run the 7-Question Gate on a finding | ✓ |
+| Score and audit a smart contract | ✓ |
+
+**How:** Upload skill ZIP → paste your target code or request → activate with the skill command.
+
+## When to use Claude Code
+
+**Best for:** Live target scanning, automated recon, tool-assisted hunting
+
+| Task | Code |
+|---|---|
+| Hunt a live target (`/hunt target.com`) | ✓ |
+| Run subdomain enumeration with real tools | ✓ |
+| Execute the APK red-team pipeline | ✓ |
+| Chain recon → hunt → report in one session | ✓ |
+| Pull live HTTP responses and analyze them | ✓ |
+
+**How:** `claude` in the skills directory → `/hunt https://target.com`
+
+## Environment pills
+
+Skills on this site show a pill indicating which environment they support:
+
+- **Chat ✓** — works in Claude Chat (static analysis, no live tools)
+- **Both ✓** — works in both Chat and Code
+- **Limited ⚠** — requires Claude Code for full functionality
+
+## Key differences
+
+| | Chat | Code |
+|---|---|---|
+| Live HTTP requests | ✗ | ✓ |
+| Tool execution (ffuf, nuclei) | ✗ | ✓ |
+| File system access | ✗ | ✓ |
+| Context window | Large | Large |
+| Skill auto-load | Via ZIP upload | Via project directory |
