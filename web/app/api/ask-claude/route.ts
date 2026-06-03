@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
         "Content-Type":  "application/json",
         "Authorization": `Bearer ${apiKey}`,
         "HTTP-Referer":  "https://cbug.vercel.app",
-        "X-Title":       "cbug — Claude Bug Hunter Skills",
+        "X-Title":       "cbug - Claude Bug Hunter Skills",
       },
       body: JSON.stringify({
         model:      MODEL,
