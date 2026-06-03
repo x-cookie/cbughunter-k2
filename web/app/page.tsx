@@ -10,6 +10,7 @@ import { ThreeSteps } from "@/components/sections/ThreeSteps";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { DomainGrid } from "@/components/sections/DomainGrid";
 import { GateCallout } from "@/components/sections/GateCallout";
+import { SectionReveal } from "@/components/SectionReveal";
 
 export const metadata: Metadata = {
   title: "cbug — Claude Bug Hunting Skills",
@@ -21,15 +22,18 @@ export default function HomePage() {
   return (
     <>
       <Nav />
+      {/* Hero and Marquee are above-fold — no entrance animation */}
       <HeroSection />
       <Marquee />
-      <StatsStrip />
-      <TwoWaysSection />
-      <FeaturedSkills />
-      <ThreeSteps />
-      <HowItWorks />
-      <DomainGrid />
-      <GateCallout />
+
+      {/* Every section below the fold gets a section-level motion.div */}
+      <SectionReveal><StatsStrip /></SectionReveal>
+      <SectionReveal><TwoWaysSection /></SectionReveal>
+      <SectionReveal><FeaturedSkills /></SectionReveal>
+      <SectionReveal><ThreeSteps /></SectionReveal>
+      <SectionReveal><HowItWorks /></SectionReveal>
+      <SectionReveal><DomainGrid /></SectionReveal>
+      <SectionReveal><GateCallout /></SectionReveal>
       <Footer />
     </>
   );
