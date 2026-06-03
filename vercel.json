@@ -3,6 +3,5 @@
   "outputDirectory": "web/.next",
   "installCommand": "cd web && npm ci",
   "devCommand": "cd web && npm run dev",
-  "framework": "nextjs",
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- web/"
+  "framework": "nextjs"
 }
