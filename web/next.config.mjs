@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    staticGenerationTimeout: 120,
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;

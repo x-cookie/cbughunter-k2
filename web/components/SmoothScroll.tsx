@@ -17,6 +17,8 @@ function isInsideScrollable(el: Element, deltaY: number): boolean {
   return false;
 }
 
+export const SCROLL_TO_EVENT = "cbug:scroll-to";
+
 export function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
