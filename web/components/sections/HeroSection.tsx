@@ -124,14 +124,6 @@ export function HeroSection() {
               </g>
             </g>
 
-            {/* Ghost — float-e: 13s, delay 1.2s */}
-            <g style={{ animation: "float-e 13s ease-in-out 1.2s infinite", transformOrigin: "198px 205px" }} opacity="0.22">
-              <g transform="translate(158,164)">
-                <polygon points="40,0 80,23 40,46 0,23"   fill="url(#btop)" />
-                <polygon points="0,23 40,46 40,72 0,49"   fill="url(#bleft)" />
-                <polygon points="40,46 80,23 80,49 40,72"  fill="url(#bright)" />
-              </g>
-            </g>
 
             {/* Scattered glowing tiles */}
             {([

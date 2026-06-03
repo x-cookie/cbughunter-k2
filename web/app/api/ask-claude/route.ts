@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 /* OpenRouter model — Ministral 3B (low-latency, cheap) */
-const MODEL = "mistralai/ministral-3b";
+const MODEL = "mistralai/ministral-3b-2512";
 
 export async function POST(req: NextRequest) {
   try {
