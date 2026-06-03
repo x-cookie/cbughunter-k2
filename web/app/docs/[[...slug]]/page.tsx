@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
+import { DocsSidebar } from "@/components/DocsSidebar";
 import { CubeAccent } from "@/components/CubeAccent";
 
 const docsDir = path.join(process.cwd(), "..", "docs");
@@ -16,8 +16,6 @@ const SECTIONS = [
   { slug: "chat-vs-code",    title: "Chat vs Code",      label: "Which env to use",       group: "Usage" },
   { slug: "7-question-gate", title: "7-Question Gate",   label: "Pre-submit checklist",   group: "Quality" },
 ];
-
-const GROUPS = ["Getting started", "Usage", "Quality"];
 
 /* Custom heading components that add anchored IDs */
 const mdxComponents = {
@@ -64,65 +62,8 @@ export default function DocsPage() {
       <Nav />
       <div style={{ display: "flex", minHeight: "calc(100vh - 68px)", background: "var(--bg)" }}>
 
-        {/* ── Sidebar ── */}
-        <aside style={{
-          width: 240,
-          flexShrink: 0,
-          borderRight: "1px solid var(--b0)",
-          background: "var(--hero)",
-          position: "sticky",
-          top: 68,
-          height: "calc(100vh - 68px)",
-          overflowY: "auto",
-        }}>
-          <div style={{ padding: "28px 0 16px" }}>
-            <div style={{ padding: "0 24px 16px", fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)" }}>
-              Documentation
-            </div>
-
-            {GROUPS.map((group) => {
-              const pages = SECTIONS.filter((p) => p.group === group);
-              return (
-                <div key={group} style={{ marginBottom: 8 }}>
-                  <div style={{ padding: "4px 24px", fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(240,240,255,0.16)" }}>
-                    {group}
-                  </div>
-                  {pages.map((page) => (
-                    <a
-                      key={page.slug}
-                      href={`#${page.slug}`}
-                      style={{
-                        display: "block",
-                        padding: "9px 24px 9px 22px",
-                        textDecoration: "none",
-                        borderLeft: "2px solid transparent",
-                        transition: "border-color 0.15s",
-                      }}
-                    >
-                      <div style={{ fontSize: 13, fontWeight: 400, color: "rgba(240,240,255,0.40)", lineHeight: 1.25, marginBottom: 2 }}>
-                        {page.title}
-                      </div>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "rgba(240,240,255,0.18)", letterSpacing: "0.02em" }}>
-                        {page.label}
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
-
-          <div style={{ margin: "4px 24px", borderTop: "1px solid var(--b0)" }} />
-          <div style={{ padding: "14px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
-            <a href="https://github.com/x-cookie/cbughunter-k1" target="_blank" rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "rgba(240,240,255,0.22)", textDecoration: "none", letterSpacing: "0.04em" }}>
-              GitHub →
-            </a>
-            <Link href="/skills" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "rgba(240,240,255,0.22)", textDecoration: "none", letterSpacing: "0.04em" }}>
-              All skills →
-            </Link>
-          </div>
-        </aside>
+        {/* ── Scrollspy sidebar (client) ── */}
+        <DocsSidebar sections={SECTIONS} />
 
         {/* ── Content ── */}
         <main style={{ flex: 1, minWidth: 0 }}>
