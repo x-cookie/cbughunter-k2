@@ -12,9 +12,9 @@ interface Section {
   group: string;
 }
 
-const GROUPS = ["Getting started", "Usage", "Quality"];
+const GROUPS = ["Getting started", "Usage", "Quality", "Support"];
 
-export function DocsSidebar({ sections }: { sections: Section[] }) {
+export function DocsSidebar({ sections, inline }: { sections: Section[]; inline?: boolean }) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.slug ?? "");
 
   /* Scrollspy — highlights section currently in view */
@@ -46,6 +46,34 @@ export function DocsSidebar({ sections }: { sections: Section[] }) {
     window.dispatchEvent(new CustomEvent(SCROLL_TO_EVENT, { detail: { y } }));
     setActiveId(slug);
   };
+
+  /* Inline mode: plain nav block for embedding inside a grid column */
+  if (inline) {
+    return (
+      <nav style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 10, paddingLeft: 10 }}>
+          On this page
+        </div>
+        {sections.map((page) => {
+          const active = page.slug === activeId;
+          return (
+            <button key={page.slug} onClick={() => scrollTo(page.slug)}
+              className="docs-nav-link"
+              style={{
+                display: "block", width: "100%", textAlign: "left", background: "transparent",
+                border: "none", borderLeft: `2px solid ${active ? "var(--accent)" : "transparent"}`,
+                padding: "6px 10px", cursor: "pointer", borderRadius: "0 6px 6px 0",
+                fontFamily: "var(--font-sans)", fontSize: 12,
+                color: active ? "var(--text)" : "rgba(240,240,255,0.35)",
+                fontWeight: active ? 500 : 400, transition: "color 0.15s, border-color 0.15s",
+              }}>
+              {page.title}
+            </button>
+          );
+        })}
+      </nav>
+    );
+  }
 
   return (
     <aside style={{

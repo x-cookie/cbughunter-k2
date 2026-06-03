@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { HeroPingOverlay } from "@/components/HeroPingOverlay";
-import { ArrowRight } from "@/components/icons";
+import { HeroContent } from "@/components/HeroContent";
 
 /* Pre-computed star positions for a static galaxy field */
 const STARS = [
@@ -41,29 +40,8 @@ export function HeroSection() {
         ].join(", "),
       }} />
 
-      {/* Left text */}
-      <div style={{ position: "relative", zIndex: 3, maxWidth: 600, flexShrink: 0 }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 20 }}>
-          51 skills · 15 commands · 574+ H1 patterns
-        </p>
-        <h1 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(48px, 7vw, 80px)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.05em", marginBottom: 24 }}>
-          <span style={{ color: "var(--text)", display: "block" }}>Turn Claude into a</span>
-          <span style={{ color: "var(--text-fade)", display: "block" }}>senior bug hunter</span>
-        </h1>
-        <p style={{ fontSize: 16, color: "rgba(240,240,255,0.40)", maxWidth: 440, lineHeight: 1.68, fontWeight: 300, marginBottom: 40 }}>
-          51 specialized skills built from real bug bounty disclosures. Auto-load by context.
-          7-Question Gate before every submission.
-        </p>
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <Link href="/skills" style={{ background: "var(--accent)", color: "#fff", padding: "13px 28px", borderRadius: 7, fontSize: 14, fontWeight: 600, fontFamily: "var(--font-sans)", textDecoration: "none", display: "inline-block" }}>
-            Browse all skills
-          </Link>
-          <a href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener noreferrer"
-            style={{ fontSize: 14, fontWeight: 500, color: "rgba(240,240,255,0.45)", fontFamily: "var(--font-sans)", display: "flex", alignItems: "center", gap: 7, textDecoration: "none" }}>
-            View on GitHub <ArrowRight />
-          </a>
-        </div>
-      </div>
+      {/* Left — animated hero content (client component) */}
+      <HeroContent />
 
       {/* Right — galaxy + floating cubes */}
       <div className="hero-diamonds" style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "55%", pointerEvents: "none", zIndex: 2 }}>

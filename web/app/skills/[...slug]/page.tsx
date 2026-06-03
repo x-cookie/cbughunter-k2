@@ -12,7 +12,7 @@ import { CubeAccent } from "@/components/CubeAccent";
 import { getSkill, getSkillsByDomain, skills } from "@/content/skills";
 import { getDomain, domains } from "@/content/domains";
 import { getDemoId } from "@/content/demos";
-import { AskClaudeWidget } from "@/components/AskClaudeWidget";
+import { AskCbugModal } from "@/components/AskCbugModal";
 
 /* Domain slug → filesystem folder name */
 const DOMAIN_FOLDER: Record<string, string> = {
@@ -315,8 +315,8 @@ function SkillDetailPage({ skillId }: { skillId: string }) {
                 </div>
               </div>
 
-              {/* ── Ask Claude (live via OpenRouter) ── */}
-              <AskClaudeWidget
+              {/* ── Ask cbug (Mistral via OpenRouter) ── */}
+              <AskCbugModal
                 skillName={skill.name}
                 skillCommand={skill.command}
                 domain={domain?.title ?? skill.domain}
