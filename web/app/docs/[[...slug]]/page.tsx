@@ -3,6 +3,7 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/PageHeader";
 import { DocsSidebar } from "@/components/DocsSidebar";
+import { CubeAccent } from "@/components/CubeAccent";
 import { domains } from "@/content/domains";
 
 const GITHUB = "https://github.com/x-cookie/cbughunter-k1/tree/main/skills";
@@ -60,6 +61,11 @@ export default function DocsPage() {
   return (
     <>
       <Nav />
+      {/* Cubes float behind PageHeader */}
+      <div style={{ position: "relative" }}>
+        <CubeAccent variant="blue"   size="lg" opacity={0.55} style={{ position: "absolute", top: -15, right: 0, zIndex: 0 }} />
+        <CubeAccent variant="purple" size="md" opacity={0.38} style={{ position: "absolute", bottom: 0, right: 240, zIndex: 0 }} />
+      </div>
       <PageHeader
         eyebrow="Quick start · No code required"
         title={
@@ -253,13 +259,8 @@ export default function DocsPage() {
             </section>
 
             {/* CTA */}
-            <div style={{
-              background: "var(--accent-dim)",
-              border: "1px solid rgba(90,133,255,0.18)",
-              borderRadius: 14,
-              padding: "32px",
-              textAlign: "center",
-            }}>
+            <div style={{ background: "var(--accent-dim)", border: "1px solid rgba(90,133,255,0.18)", borderRadius: 14, padding: "32px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+              <CubeAccent variant="mixed" size="sm" opacity={0.35} style={{ position: "absolute", top: -5, right: 8, zIndex: 0 }} />
               <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: 700, color: "var(--text)", marginBottom: 6, letterSpacing: "-0.02em" }}>
                 Ready to get started?
               </h2>

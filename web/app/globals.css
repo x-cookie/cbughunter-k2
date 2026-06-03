@@ -215,6 +215,28 @@ body {
 .cbug-response strong { color: rgba(240,240,255,0.88); }
 .cbug-response em { color: rgba(240,240,255,0.65); font-style: italic; }
 
+/* ─── Ask cbug dialog animations ─── */
+@keyframes cbug-dialog-in {
+  from { opacity: 0; transform: scale(0.92) translateY(16px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+@keyframes cbug-dialog-out {
+  from { opacity: 1; transform: scale(1)    translateY(0);    }
+  to   { opacity: 0; transform: scale(0.93) translateY(10px); }
+}
+@keyframes cbug-backdrop-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cbug-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+dialog.cbug-dialog          { animation: cbug-dialog-in  0.28s cubic-bezier(0.16,1,0.3,1) both; }
+dialog.cbug-dialog.cbug-closing { animation: cbug-dialog-out 0.22s ease-in both; }
+dialog.cbug-dialog::backdrop          { animation: cbug-backdrop-in  0.28s ease-out both; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); }
+dialog.cbug-dialog.cbug-closing::backdrop { animation: cbug-backdrop-out 0.22s ease-in  both; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); }
+
+/* ─── Typing indicator ─── */
+@keyframes typing-dot {
+  0%,60%,100% { transform: translateY(0);   opacity: 0.4; }
+  30%         { transform: translateY(-5px); opacity: 1;   }
+}
+
 /* ─── Docs nav link hover (sidebar) ─── */
 .docs-nav-link { color: rgba(240,240,255,0.35); transition: color 0.15s, border-color 0.15s; }
 .docs-nav-link:hover { color: var(--text); border-left-color: rgba(90,133,255,0.5) !important; }

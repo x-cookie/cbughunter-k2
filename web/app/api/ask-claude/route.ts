@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       "X-Title":       "cbug — Claude Bug Hunter Skills",
     },
     body: JSON.stringify({
-      model: "mistralai/mistral-nemo",
+      model: "mistralai/ministral-3b-2410",
       max_tokens: 480,
       messages: [
         {
