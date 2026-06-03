@@ -1,24 +1,33 @@
+import type { Metadata } from "next";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { Marquee } from "@/components/Marquee";
 import { StatsStrip } from "@/components/sections/StatsStrip";
 import { TwoWaysSection } from "@/components/sections/TwoWaysSection";
-import { DomainGrid } from "@/components/sections/DomainGrid";
+import { FeaturedSkills } from "@/components/sections/FeaturedSkills";
 import { HowItWorks } from "@/components/sections/HowItWorks";
+import { DomainGrid } from "@/components/sections/DomainGrid";
 import { GateCallout } from "@/components/sections/GateCallout";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "cbug — Claude Bug Hunting Skills",
+  description:
+    "51 specialized Claude skills for bug hunting, web security, and external red-team workflows. Auto-load by context. 7-Question Gate before every submission.",
+};
+
+export default function HomePage() {
   return (
     <>
       <Nav />
-      <main>
-        <HeroSection />
-        <StatsStrip />
-        <TwoWaysSection />
-        <DomainGrid />
-        <HowItWorks />
-        <GateCallout />
-      </main>
+      <HeroSection />
+      <Marquee />
+      <StatsStrip />
+      <TwoWaysSection />
+      <FeaturedSkills />
+      <HowItWorks />
+      <DomainGrid />
+      <GateCallout />
       <Footer />
     </>
   );
