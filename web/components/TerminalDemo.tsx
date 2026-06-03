@@ -53,8 +53,8 @@ const STYLE_MAP: Record<LineStyle, React.CSSProperties> = {
 export function TerminalDemo() {
   const [visible, setVisible] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const started = useRef(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -74,8 +74,10 @@ export function TerminalDemo() {
     return () => obs.disconnect();
   }, []);
 
+  /* Scroll only within the terminal body — not the page */
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const body = bodyRef.current;
+    if (body) body.scrollTop = body.scrollHeight;
   }, [visible]);
 
   return (
@@ -120,8 +122,8 @@ export function TerminalDemo() {
         </div>
       </div>
 
-      {/* Terminal body */}
-      <div style={{
+      {/* Terminal body — ref for internal scrolling only */}
+      <div ref={bodyRef} style={{
         padding: "16px 20px",
         minHeight: 320,
         maxHeight: 380,
@@ -152,7 +154,6 @@ export function TerminalDemo() {
             <span className="cursor" style={{ color: "var(--accent)", fontSize: 13 }}>▌</span>
           </div>
         )}
-        <div ref={bottomRef} />
       </div>
     </div>
   );

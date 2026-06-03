@@ -14,17 +14,17 @@ export function Footer() {
           <span style={{ color: "var(--text-fade)" }}>Start in minutes.</span>
         </h2>
         <p style={{ fontSize: 14, color: "rgba(240,240,255,0.38)", marginBottom: 28, fontWeight: 300 }}>
-          Start with Web Hunting — 22 skills covering the most common H1 vulnerability classes.
+          Browse all 8 attack domains — 51 specialized skills, MIT licensed.
         </p>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 20, position: "relative", zIndex: 1 }}>
           <Link
-            href="/domains/web-hunting"
+            href="/skills"
             style={{ background: "var(--accent)", color: "#fff", padding: "13px 26px", borderRadius: 7, fontSize: 14, fontWeight: 600, fontFamily: "var(--font-sans)", textDecoration: "none", display: "inline-block" }}
           >
-            Browse Web Hunting
+            Browse all 8 domains
           </Link>
           <Link
-            href="/docs/install"
+            href="/docs"
             style={{ fontSize: 14, fontWeight: 500, color: "rgba(240,240,255,0.5)", display: "inline-flex", alignItems: "center", gap: 7, textDecoration: "none" }}
           >
             Read the install guide <ArrowRight />

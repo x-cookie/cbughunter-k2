@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
+/* Simple opacity + slight y — no blur/scale to avoid GPU jank */
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
@@ -10,11 +11,10 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, scale: 0.965, filter: "blur(4px)" }}
-        animate={{ opacity: 1, scale: 1,     filter: "blur(0px)" }}
-        exit={{    opacity: 0, scale: 1.025,  filter: "blur(3px)" }}
-        transition={{ duration: 0.42, ease: EASE }}
-        style={{ transformOrigin: "center top" }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.28, ease: EASE }}
       >
         {children}
       </motion.div>
