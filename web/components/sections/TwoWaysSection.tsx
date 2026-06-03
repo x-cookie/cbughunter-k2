@@ -1,74 +1,63 @@
-import { Card } from "@/components/ui/Card";
-import { Pill } from "@/components/ui/Pill";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
+import { TerminalDemo } from "@/components/TerminalDemo";
 
 export function TwoWaysSection() {
   return (
-    <section className="py-20 bg-surface-alt">
-      <div className="max-w-6xl mx-auto px-6">
-        <p className="font-mono text-xs tracking-widest uppercase text-text-muted mb-2">
-          Usage
-        </p>
-        <h2 className="text-3xl font-bold text-text mb-12">Two ways to use</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Card A */}
-          <Card className="p-8 flex flex-col gap-6">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-2xl mb-2">🌐</p>
-                <h3 className="text-xl font-bold text-text">Review your code</h3>
-                <p className="text-text-muted text-sm mt-1">
-                  Upload skill ZIP → paste code or file → receive findings artifact
-                </p>
+    <div
+      style={{
+        background: "var(--s1)",
+        borderBottom: "1px solid var(--b0)",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+      }}
+      className="split-section"
+    >
+      {/* Left */}
+      <div style={{ padding: "72px 48px", borderRight: "1px solid var(--b0)" }}>
+        <ScrollReveal>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 16 }}>
+            Two ways to use
+          </div>
+        </ScrollReveal>
+        <ScrollReveal delay={0.1}>
+          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.05, color: "var(--text)", marginBottom: 20 }}>
+            Static review<br />
+            <span style={{ color: "var(--text-fade)" }}>or live hunt</span>
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal delay={0.2}>
+          <p style={{ fontSize: 14, color: "rgba(240,240,255,0.42)", lineHeight: 1.75, fontWeight: 300, maxWidth: 400, marginBottom: 32 }}>
+            Every skill works in Claude Chat for code review artifacts.
+            Connect Claude Code and the same skill gains live HTTP access,
+            tool execution, and streaming output.
+          </p>
+        </ScrollReveal>
+        <ScrollRevealGroup style={{ display: "flex", flexDirection: "column", gap: 0 }} stagger={0.08}>
+          {[
+            { label: "Claude Chat", note: "Upload ZIP → paste code → get findings artifact", env: "Chat ✓", bg: "var(--accent-dim)", tc: "var(--accent)" },
+            { label: "Claude Code", note: "Install bundle → /hunt target.com → live scan",   env: "Code ✓", bg: "var(--accent2-dim)", tc: "var(--accent2)" },
+          ].map((row) => (
+            <ScrollRevealItem key={row.label}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "18px 0", borderTop: "1px solid var(--b0)" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, background: row.bg, color: row.tc, padding: "3px 8px", borderRadius: 4, marginTop: 2, flexShrink: 0 }}>
+                  {row.env}
+                </span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text)", marginBottom: 2 }}>{row.label}</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-muted)" }}>{row.note}</div>
+                </div>
               </div>
-              <Pill env="chat" />
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs bg-surface border border-border rounded px-3 py-1.5 text-text-muted">
-                {"// your code here"}
-              </span>
-              <span className="text-text-subtle">→</span>
-              <span className="bg-success/10 text-success text-xs font-medium rounded-full px-2.5 py-0.5">
-                PDF findings report
-              </span>
-            </div>
-            <a
-              href="/docs/install"
-              className="text-sm text-primary hover:text-primary-dark font-medium"
-            >
-              How to install →
-            </a>
-          </Card>
-
-          {/* Card B */}
-          <Card className="p-8 flex flex-col gap-6">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-2xl mb-2">⌨️</p>
-                <h3 className="text-xl font-bold text-text">Hunt live targets</h3>
-                <p className="text-text-muted text-sm mt-1">
-                  Install bundle → open terminal → run /hunt target.com
-                </p>
-              </div>
-              <Pill env="both" />
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs bg-hero-bg text-white rounded px-3 py-1.5">
-                /hunt target.com
-              </span>
-              <span className="text-text-subtle">→</span>
-              <span className="bg-secondary-light text-secondary-dark text-xs font-medium rounded-full px-2.5 py-0.5">
-                Live findings stream
-              </span>
-            </div>
-            <a
-              href="/docs/chat-vs-code"
-              className="text-sm text-primary hover:text-primary-dark font-medium"
-            >
-              View CLI docs →
-            </a>
-          </Card>
-        </div>
+            </ScrollRevealItem>
+          ))}
+        </ScrollRevealGroup>
       </div>
-    </section>
+
+      {/* Right — terminal */}
+      <div style={{ padding: "72px 48px", display: "flex", alignItems: "center" }}>
+        <ScrollReveal delay={0.2} style={{ width: "100%" }}>
+          <TerminalDemo />
+        </ScrollReveal>
+      </div>
+    </div>
   );
 }

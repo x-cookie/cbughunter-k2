@@ -3,25 +3,159 @@
 @tailwind utilities;
 
 :root {
+  /* ── Dark palette ── */
+  --bg:          #08080f;
+  --s1:          #0d0d1c;
+  --s2:          #111128;
+  --s3:          rgba(77,124,255,0.08);
+  --b0:          rgba(255,255,255,0.07);
+  --text:        #f0f0ff;
+  --text-fade:   #8259EF;
+  --text-muted:  #5a5a80;
+  --accent:      #5a85ff;
+  --accent-dim:  rgba(90,133,255,0.12);
+  --accent2:     #9a72f0;
+  --accent2-dim: rgba(154,114,240,0.12);
+  --hero:        #04040a;
+
+  /* ── Tailwind legacy aliases ── */
   --color-primary:         #0031FF;
   --color-primary-dark:    #0025cc;
-  --color-primary-light:   #e6ebff;
+  --color-primary-light:   rgba(90,133,255,0.15);
   --color-secondary:       #8259EF;
   --color-secondary-dark:  #6340d4;
-  --color-secondary-light: #f0ebff;
-  --color-hero-bg:         #08080f;
-  --color-surface:         #ffffff;
-  --color-surface-alt:     #f8f8fc;
-  --color-border:          #e2e8f0;
-  --color-border-dark:     rgba(255,255,255,0.08);
-  --color-text:            #0f172a;
-  --color-text-muted:      #64748b;
-  --color-text-subtle:     #94a3b8;
-  --color-success:         #16a34a;
-  --color-danger:          #dc2626;
+  --color-secondary-light: rgba(154,114,240,0.12);
+  --color-hero-bg:         #04040a;
+  --color-surface:         #0d0d1c;
+  --color-surface-alt:     #111128;
+  --color-border:          rgba(255,255,255,0.07);
+  --color-text:            #f0f0ff;
+  --color-text-muted:      #5a5a80;
+  --color-text-subtle:     #3a3a60;
+  --color-success:         #22c55e;
+  --color-danger:          #ef4444;
+
+  /* ── Fonts ── */
+  --font-sans:  var(--font-sans), "Inter", system-ui, sans-serif;
+  --font-mono:  var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-serif), "Instrument Serif", Georgia, serif;
 }
 
+* { box-sizing: border-box; }
+
 body {
-  color: var(--color-text);
-  background: var(--color-surface);
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Marquee ─── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 28s linear infinite;
+  display: flex;
+  width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ─── Skill card hover ─── */
+.skill-card {
+  transition: border-color 0.18s, background 0.18s;
+}
+.skill-card:hover {
+  border-color: rgba(90,133,255,0.35) !important;
+  background: var(--s2) !important;
+}
+
+/* ─── Terminal cursor ─── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor { animation: blink 1s step-end infinite; }
+
+/* ─── Ping dots ─── */
+@keyframes ping {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  70%  { transform: scale(2.4); opacity: 0;   }
+  100% { transform: scale(2.4); opacity: 0;   }
+}
+.ping-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ─── Galaxy float ─── */
+@keyframes galaxy-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  30%       { transform: translateY(-14px) rotate(0.4deg); }
+  65%       { transform: translateY(-9px) rotate(-0.3deg); }
+}
+.cubes-float { animation: galaxy-float 9s ease-in-out infinite; }
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 0.15; }
+}
+
+/* ─── Docs prose ─── */
+.docs-prose h1 { font-family: var(--font-sans); font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); margin: 0 0 1.5rem; line-height: 1.1; }
+.docs-prose h2 { font-family: var(--font-sans); font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin: 2.5rem 0 0.75rem; border-top: 1px solid var(--b0); padding-top: 2rem; }
+.docs-prose h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 0.5rem; }
+.docs-prose p  { font-size: 14px; color: rgba(240,240,255,0.55); line-height: 1.8; margin: 0 0 1rem; font-weight: 300; }
+.docs-prose ul, .docs-prose ol { padding-left: 1.25rem; margin: 0 0 1rem; }
+.docs-prose li { font-size: 14px; color: rgba(240,240,255,0.50); line-height: 1.75; margin-bottom: 0.3rem; font-weight: 300; }
+.docs-prose strong { color: var(--text); font-weight: 600; }
+.docs-prose a  { color: var(--accent); text-decoration: none; }
+.docs-prose a:hover { text-decoration: underline; }
+.docs-prose pre { background: #0d1117; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 1rem 1.25rem; overflow-x: auto; margin: 1rem 0; }
+.docs-prose code { font-family: var(--font-mono); font-size: 12px; color: rgba(240,240,255,0.8); background: rgba(255,255,255,0.05); border-radius: 4px; padding: 2px 6px; }
+.docs-prose pre code { background: none; padding: 0; font-size: 12.5px; line-height: 1.7; }
+.docs-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 13px; }
+.docs-prose th { text-align: left; padding: 8px 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--b0); }
+.docs-prose td { padding: 10px 12px; color: rgba(240,240,255,0.50); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+.docs-prose hr { border: none; border-top: 1px solid var(--b0); margin: 2rem 0; }
+.docs-prose blockquote { border-left: 2px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--accent-dim); border-radius: 0 8px 8px 0; }
+.docs-prose blockquote p { color: rgba(240,240,255,0.65); margin: 0; }
+
+/* ─── Skill body prose ─── */
+.skill-prose h2 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin: 2rem 0 0.75rem; }
+.skill-prose h3 { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; color: var(--text); margin: 1.25rem 0 0.4rem; }
+.skill-prose p  { font-size: 13px; color: rgba(240,240,255,0.45); line-height: 1.75; margin: 0 0 0.75rem; font-weight: 300; }
+.skill-prose ul, .skill-prose ol { padding-left: 1.2rem; margin: 0 0 0.75rem; }
+.skill-prose li { font-size: 13px; color: rgba(240,240,255,0.40); line-height: 1.65; margin-bottom: 0.2rem; font-weight: 300; }
+.skill-prose strong { color: rgba(240,240,255,0.75); font-weight: 600; }
+.skill-prose code { font-family: var(--font-mono); font-size: 11px; color: var(--accent); background: var(--accent-dim); border-radius: 4px; padding: 2px 6px; }
+.skill-prose pre { background: #080810; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+.skill-prose pre code { background: none; color: rgba(240,240,255,0.80); padding: 0; font-size: 11px; line-height: 1.7; }
+.skill-prose hr { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 1.5rem 0; }
+.skill-prose h4 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; color: rgba(240,240,255,0.6); margin: 1rem 0 0.35rem; }
+.skill-prose .code-block { position: relative; margin: 0.75rem 0; }
+.skill-prose .code-block .code-lang {
+  position: absolute; top: 0; right: 0;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-muted);
+  background: rgba(255,255,255,0.05); padding: 3px 8px;
+  border-radius: 0 8px 0 6px; border-bottom: 1px solid rgba(255,255,255,0.06); border-left: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .split-section { grid-template-columns: 1fr !important; }
+  .skills-grid   { grid-template-columns: 1fr !important; }
+  .pillars-grid  { grid-template-columns: repeat(2,1fr) !important; }
+  .stats-bar     { grid-template-columns: 1fr !important; }
+  .hero-diamonds { display: none !important; }
+}
+@media (max-width: 600px) {
+  .pillars-grid  { grid-template-columns: 1fr !important; }
 }
