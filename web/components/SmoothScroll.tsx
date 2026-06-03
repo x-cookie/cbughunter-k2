@@ -1,8 +1,21 @@
 "use client";
 import { useEffect } from "react";
 
-/* Custom event name — sidebar uses this to trigger lerp scroll */
-export const SCROLL_TO_EVENT = "cbug:scroll-to";
+/* Returns true if `el` or any ancestor can scroll in the direction of `deltaY` */
+function isInsideScrollable(el: Element, deltaY: number): boolean {
+  let node: Element | null = el;
+  while (node && node !== document.documentElement && node !== document.body) {
+    const style = window.getComputedStyle(node);
+    const oy = style.overflowY;
+    if (oy === "auto" || oy === "scroll") {
+      const canUp   = deltaY < 0 && node.scrollTop > 0;
+      const canDown = deltaY > 0 && node.scrollTop < node.scrollHeight - node.clientHeight - 1;
+      if (canUp || canDown) return true;
+    }
+    node = node.parentElement;
+  }
+  return false;
+}
 
 export function SmoothScroll() {
   useEffect(() => {
@@ -15,8 +28,10 @@ export function SmoothScroll() {
     let raf: number;
     const LERP = 0.045;
 
-    /* Wheel: update target */
     const onWheel = (e: WheelEvent) => {
+      /* Pass wheel events through to scrollable child containers (e.g. chat modal) */
+      if (e.target instanceof Element && isInsideScrollable(e.target, e.deltaY)) return;
+
       e.preventDefault();
       let delta = e.deltaY;
       if (e.deltaMode === 1) delta *= 44;
@@ -25,21 +40,14 @@ export function SmoothScroll() {
       target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
     };
 
-    /* Sidebar / anchor click: jump lerp target directly */
     const onScrollTo = (e: Event) => {
       const y = (e as CustomEvent<{ y: number }>).detail.y;
       target = Math.max(0, Math.min(y, document.body.scrollHeight - window.innerHeight));
     };
 
     const tick = () => {
-      /* If something external jumped the scroll (e.g. browser anchor nav),
-         adopt the new position so lerp doesn't fight it */
       const actual = window.scrollY;
-      if (Math.abs(actual - current) > 80) {
-        target = actual;
-        current = actual;
-      }
-
+      if (Math.abs(actual - current) > 80) { target = actual; current = actual; }
       const diff = target - current;
       current += diff * LERP;
       if (Math.abs(diff) > 0.1) window.scrollTo(0, current);
@@ -47,12 +55,12 @@ export function SmoothScroll() {
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener(SCROLL_TO_EVENT, onScrollTo);
+    window.addEventListener("cbug:scroll-to", onScrollTo);
     raf = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("wheel", onWheel);
-      window.removeEventListener(SCROLL_TO_EVENT, onScrollTo);
+      window.removeEventListener("cbug:scroll-to", onScrollTo);
       cancelAnimationFrame(raf);
     };
   }, []);
