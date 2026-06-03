@@ -1,36 +1,32 @@
 "use client";
 import { useEffect } from "react";
 
-/* Lerp-based scroll — LERP 0.07 = very heavy, weighted feel */
+/* LERP 0.045 = very heavy, weighted — premium feel */
 export function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if ("ontouchstart" in window) return; // skip mobile
+    if ("ontouchstart" in window) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let target = window.scrollY;
     let current = window.scrollY;
     let raf: number;
-    const LERP = 0.072;
-    const SPEED = 1.1;
+    const LERP = 0.045;
 
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       let delta = e.deltaY;
-      if (e.deltaMode === 1) delta *= 40;
+      if (e.deltaMode === 1) delta *= 44;
       if (e.deltaMode === 2) delta *= window.innerHeight;
-      target += delta * SPEED;
+      /* Amplify slightly so it doesn't feel unresponsive despite heavy lerp */
+      target += delta * 1.3;
       target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
     };
 
     const tick = () => {
       const diff = target - current;
-      if (Math.abs(diff) > 0.15) {
-        current += diff * LERP;
-        window.scrollTo(0, current);
-      } else {
-        current = target;
-      }
+      current += diff * LERP;
+      if (Math.abs(diff) > 0.1) window.scrollTo(0, current);
       raf = requestAnimationFrame(tick);
     };
 

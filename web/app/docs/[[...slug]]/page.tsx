@@ -22,7 +22,6 @@ const GROUPS = ["Getting started", "Usage", "Quality"];
 
 interface DocMeta {
   content: string;
-  headings: { text: string; level: number }[];
   readingTime: number;
   wordCount: number;
 }
@@ -32,19 +31,9 @@ function readDoc(slug: string): DocMeta | null {
   if (!fs.existsSync(fp)) return null;
   const raw = fs.readFileSync(fp, "utf-8");
   const { content } = matter(raw);
-
-  /* Extract headings */
-  const headings: { text: string; level: number }[] = [];
-  for (const line of content.split("\n")) {
-    const m = line.match(/^(#{1,3})\s+(.+)$/);
-    if (m) headings.push({ level: m[1].length, text: m[2].trim() });
-  }
-
-  /* Reading time */
   const words = content.split(/\s+/).length;
   const readingTime = Math.max(1, Math.round(words / 200));
-
-  return { content, headings, readingTime, wordCount: words };
+  return { content, readingTime, wordCount: words };
 }
 
 interface Props { params: { slug?: string[] } }
@@ -65,9 +54,6 @@ export default function DocsPage({ params }: Props) {
   const idx  = DOC_PAGES.findIndex((p) => p.slug === activeSlug);
   const prev = DOC_PAGES[idx - 1];
   const next = DOC_PAGES[idx + 1];
-
-  /* Heading slug for TOC anchors */
-  const toAnchor = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   return (
     <>
@@ -160,47 +146,12 @@ export default function DocsPage({ params }: Props) {
             </ScrollReveal>
           </div>
 
-          {/* Content + TOC */}
-          <div style={{ display: "flex", gap: 0 }}>
-            {/* Prose */}
-            <ScrollReveal style={{ flex: 1, minWidth: 0 }}>
-              <div className="docs-prose" style={{ padding: "44px 52px", maxWidth: 720 }}>
-                <MDXRemote source={doc.content} />
-              </div>
-            </ScrollReveal>
-
-            {/* Right TOC */}
-            {doc.headings.length > 2 && (
-              <aside style={{
-                width: 200,
-                flexShrink: 0,
-                padding: "44px 20px 44px 0",
-                position: "sticky",
-                top: 56,
-                height: "calc(100vh - 56px)",
-                overflowY: "auto",
-              }}>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 12 }}>
-                  On this page
-                </div>
-                <nav style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  {doc.headings.map((h, i) => (
-                    <a key={i} href={`#${toAnchor(h.text)}`} style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: 11,
-                      color: "rgba(240,240,255,0.30)",
-                      textDecoration: "none",
-                      paddingLeft: (h.level - 1) * 10,
-                      lineHeight: 1.4,
-                      padding: "4px 0",
-                    } as React.CSSProperties}>
-                      {h.text}
-                    </a>
-                  ))}
-                </nav>
-              </aside>
-            )}
-          </div>
+          {/* Prose */}
+          <ScrollReveal>
+            <div className="docs-prose" style={{ padding: "44px 52px", maxWidth: 760 }}>
+              <MDXRemote source={doc.content} />
+            </div>
+          </ScrollReveal>
 
           {/* Prev / Next */}
           <div style={{ borderTop: "1px solid var(--b0)", padding: "28px 52px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>

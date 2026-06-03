@@ -140,6 +140,21 @@ body {
 .skill-prose hr { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 1.5rem 0; }
 .skill-prose h4 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; color: rgba(240,240,255,0.6); margin: 1rem 0 0.35rem; }
 .skill-prose .code-block { position: relative; margin: 0.75rem 0; }
+/* Table overflow wrapper */
+.skill-prose table { display: block; overflow-x: auto; max-width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 11px; }
+.skill-prose th { text-align: left; padding: 7px 12px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); white-space: nowrap; }
+.skill-prose td { padding: 8px 12px; color: rgba(240,240,255,0.40); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; min-width: 100px; }
+.skill-prose tr:last-child td { border-bottom: none; }
+/* Pre overflow */
+.skill-prose pre { overflow-x: auto; max-width: 100%; white-space: pre; }
+.skill-prose { overflow-wrap: break-word; }
+
+/* dotpulse for terminal */
+@keyframes dotpulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.85); }
+  50%       { opacity: 1;   transform: scale(1.1); }
+}
+
 .skill-prose .code-block .code-lang {
   position: absolute; top: 0; right: 0;
   font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em;

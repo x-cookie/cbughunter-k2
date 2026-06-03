@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { HeroPingOverlay } from "@/components/HeroPingOverlay";
-import { GalaxyIntro } from "@/components/GalaxyIntro";
 import { ArrowRight } from "@/components/icons";
 
 /* Pre-computed star positions for a static galaxy field */
@@ -30,7 +29,6 @@ export function HeroSection() {
       padding: "80px 48px",
       background: "var(--bg)",
     }}>
-      <GalaxyIntro />
       <HeroPingOverlay />
 
       {/* Nebula gradients */}

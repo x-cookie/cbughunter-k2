@@ -57,7 +57,7 @@ export default function SkillsPage() {
         {/* Domain cards */}
         <div style={{ padding: "56px 48px", maxWidth: 1200, margin: "0 auto" }}>
           <ScrollRevealGroup
-            style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridAutoRows: "1fr", gap: 14 }}
             className="skills-grid"
             stagger={0.07}
           >
@@ -65,7 +65,7 @@ export default function SkillsPage() {
               const domainSkills = skills.filter((s) => s.domain === domain.slug);
               const preview = domainSkills.slice(0, 3).map((s) => s.command);
               return (
-                <ScrollRevealItem key={domain.slug}>
+                <ScrollRevealItem key={domain.slug} style={{ height: "100%" }}>
                   <Link
                     href={`/skills/${domain.slug}`}
                     className="skill-card"
@@ -77,14 +77,26 @@ export default function SkillsPage() {
                       textDecoration: "none",
                       display: "flex",
                       flexDirection: "column",
-                      gap: 0,
+                      height: "100%",
                     }}
                   >
-                    <div style={{ marginBottom: 16 }}>{ICONS[domain.slug]}</div>
+                    <div style={{ marginBottom: 14 }}>{ICONS[domain.slug]}</div>
                     <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", marginBottom: 6, letterSpacing: "-0.02em" }}>
                       {domain.title}
                     </div>
-                    <div style={{ fontSize: 11, color: "var(--text-muted)", lineHeight: 1.55, marginBottom: 16, fontWeight: 300, flex: 1 }}>
+                    {/* Description — clamped, takes remaining space */}
+                    <div style={{
+                      fontSize: 11,
+                      color: "var(--text-muted)",
+                      lineHeight: 1.55,
+                      marginBottom: 14,
+                      fontWeight: 300,
+                      flex: 1,
+                      overflow: "hidden",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                    } as React.CSSProperties}>
                       {domain.description.split("—")[0].trim()}
                     </div>
                     {/* Command preview pills */}
@@ -100,7 +112,8 @@ export default function SkillsPage() {
                         </span>
                       )}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    {/* Footer — always at bottom */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "auto" }}>
                       <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                         {domain.skillCount} skills
                       </span>

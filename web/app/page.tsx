@@ -6,6 +6,7 @@ import { Marquee } from "@/components/Marquee";
 import { StatsStrip } from "@/components/sections/StatsStrip";
 import { TwoWaysSection } from "@/components/sections/TwoWaysSection";
 import { FeaturedSkills } from "@/components/sections/FeaturedSkills";
+import { ThreeSteps } from "@/components/sections/ThreeSteps";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { DomainGrid } from "@/components/sections/DomainGrid";
 import { GateCallout } from "@/components/sections/GateCallout";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <StatsStrip />
       <TwoWaysSection />
       <FeaturedSkills />
+      <ThreeSteps />
       <HowItWorks />
       <DomainGrid />
       <GateCallout />

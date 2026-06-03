@@ -266,10 +266,10 @@ function SkillDetailPage({ skillId }: { skillId: string }) {
         </div>
 
         {/* Body — 2-col: content + sidebar */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "48px 48px", display: "grid", gridTemplateColumns: "1fr 280px", gap: 32, alignItems: "start" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "48px 48px", display: "grid", gridTemplateColumns: "1fr 260px", gap: 32, alignItems: "start" }}>
 
-          {/* Main content */}
-          <div>
+          {/* Main content — min-width:0 prevents grid overflow */}
+          <div style={{ minWidth: 0, overflow: "hidden" }}>
             {demoId && (
               <ScrollReveal style={{ marginBottom: 36 }}>
                 <DemoVideo videoId={demoId} title={`${skill.name} demo`} />
@@ -463,6 +463,21 @@ function markdownToHtml(md: string): string {
   text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   /* Pass 3 — markdown formatting */
+
+  /* Tables — must come before list processing */
+  text = text.replace(
+    /(?:^|\n)(\|[^\n]+\|)\n\|[-| :]+\|\n((?:\|[^\n]+\|\n?)*)/gm,
+    (_match, headerLine: string, bodyLines: string) => {
+      const headers = headerLine.split("|").map((h: string) => h.trim()).filter(Boolean);
+      const rows = bodyLines.trim().split("\n").map((row: string) =>
+        row.split("|").map((c: string) => c.trim()).filter(Boolean)
+      ).filter((r: string[]) => r.length > 0);
+      const thead = `<thead><tr>${headers.map((h: string) => `<th>${h}</th>`).join("")}</tr></thead>`;
+      const tbody = `<tbody>${rows.map((r: string[]) => `<tr>${r.map((c: string) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
+      return `<table>${thead}${tbody}</table>`;
+    }
+  );
+
   text = text
     .replace(/\*\*\*([^*\n]+)\*\*\*/g, "<strong><em>$1</em></strong>")
     .replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>")
