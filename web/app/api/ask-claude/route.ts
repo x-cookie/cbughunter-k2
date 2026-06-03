@@ -1,53 +1,78 @@
 import { NextRequest } from "next/server";
 
+/* OpenRouter model — Ministral 3B (low-latency, cheap) */
+const MODEL = "mistralai/ministral-3b";
+
 export async function POST(req: NextRequest) {
-  const { question, context } = await req.json() as { question: string; context: string };
+  try {
+    const body = await req.json() as { question?: string; context?: string };
+    const question = body.question?.trim();
+    const context  = body.context?.trim() ?? "";
 
-  if (!question?.trim()) {
-    return Response.json({ error: "Question is required" }, { status: 400 });
+    if (!question) {
+      return Response.json({ error: "Question is required" }, { status: 400 });
+    }
+
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    if (!apiKey) {
+      console.error("[ask-cbug] OPENROUTER_API_KEY is not set. Restart the dev server after adding web/.env.local");
+      return Response.json(
+        { error: "API key not configured — restart the dev server after adding OPENROUTER_API_KEY to web/.env.local" },
+        { status: 500 }
+      );
+    }
+
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type":  "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer":  "https://cbug.vercel.app",
+        "X-Title":       "cbug — Claude Bug Hunter Skills",
+      },
+      body: JSON.stringify({
+        model:      MODEL,
+        max_tokens: 480,
+        messages: [
+          {
+            role: "system",
+            content:
+              `You are cbug — a concise expert assistant for bug bounty and security research. ` +
+              `Answer clearly in under 200 words. Use markdown for code and tables. ` +
+              `Skip pleasantries. If off-topic, redirect politely to security research. ` +
+              `Skill context: ${context}`,
+          },
+          { role: "user", content: question },
+        ],
+      }),
+    });
+
+    const rawText = await res.text();
+
+    if (!res.ok) {
+      console.error(`[ask-cbug] OpenRouter ${res.status}:`, rawText);
+      return Response.json(
+        { error: `OpenRouter responded with ${res.status}: ${rawText.slice(0, 300)}` },
+        { status: 502 }
+      );
+    }
+
+    let data: { choices?: { message?: { content?: string } }[] };
+    try {
+      data = JSON.parse(rawText);
+    } catch {
+      console.error("[ask-cbug] Failed to parse OpenRouter response:", rawText);
+      return Response.json({ error: "Malformed response from OpenRouter." }, { status: 502 });
+    }
+
+    const answer = data.choices?.[0]?.message?.content?.trim() ?? "No response.";
+    return Response.json({ answer });
+
+  } catch (err) {
+    console.error("[ask-cbug] Unhandled error:", err);
+    return Response.json(
+      { error: err instanceof Error ? err.message : "Internal server error" },
+      { status: 500 }
+    );
   }
-
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey) {
-    return Response.json({ error: "API key not configured" }, { status: 500 });
-  }
-
-  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type":  "application/json",
-      "Authorization": `Bearer ${apiKey}`,
-      "HTTP-Referer":  "https://cbug.vercel.app",
-      "X-Title":       "cbug — Claude Bug Hunter Skills",
-    },
-    body: JSON.stringify({
-      model: "mistralai/ministral-3b-2410",
-      max_tokens: 480,
-      messages: [
-        {
-          role: "system",
-          content:
-            `You are a concise expert assistant for cbug — a library of Claude AI skills built for bug bounty and security research. ` +
-            `Answer clearly and briefly (under 200 words). Skip pleasantries. If the question is off-topic, redirect politely. ` +
-            `Skill context: ${context}`,
-        },
-        {
-          role: "user",
-          content: question,
-        },
-      ],
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    return Response.json({ error: `OpenRouter error: ${res.status} — ${err}` }, { status: 502 });
-  }
-
-  const data = await res.json() as {
-    choices?: { message?: { content?: string } }[];
-  };
-  const answer = data.choices?.[0]?.message?.content?.trim() ?? "No response.";
-
-  return Response.json({ answer });
 }
