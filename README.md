@@ -2,6 +2,8 @@
 
 # cbug
 
+<img src="docs/logo.png" alt="cbug logo" width="96" />
+
 **51 specialized Claude skills for bug hunting, web security, and external red-team workflows.**
 
 ![version](https://img.shields.io/badge/version-1.0.0-black?style=flat-square)

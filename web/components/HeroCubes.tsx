@@ -296,6 +296,10 @@ export function HeroCubes() {
         preserveAspectRatio="xMidYMid meet"
         style={{ position: "absolute", inset: 0 }}>
         <defs>
+          <filter id="logo-glow" x="-80%" y="-80%" width="260%" height="260%">
+            <feDropShadow dx="0" dy="0" stdDeviation="7"  floodColor="rgba(130,89,239,0.95)" />
+            <feDropShadow dx="0" dy="6" stdDeviation="12" floodColor="rgba(77,124,255,0.50)" />
+          </filter>
           <filter id="hc-glow-lg" x="-60%" y="-60%" width="220%" height="220%">
             <feGaussianBlur stdDeviation="14" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -329,6 +333,22 @@ export function HeroCubes() {
               <polygon points="0,41 72,82 72,132 0,91"     fill="url(#hc-bleft)" />
               <polygon points="72,82 144,41 144,91 72,132"  fill="url(#hc-bright)" />
               <polygon points="72,0 144,41 72,82 0,41" fill="none" stroke="rgba(140,180,255,0.5)" strokeWidth="0.8" />
+            </g>
+            {/* logo — rides float-a + parallax, mix-blend-mode:screen drops the black bg */}
+            <g transform="translate(360,0)" style={{ transformBox: "fill-box" }}>
+              <g style={{
+                animation: "logo-scale 3.2s ease-in-out 0.6s infinite",
+                transformOrigin: "0px 22px",
+                transformBox: "fill-box",
+              }}>
+                <image
+                  href="/logo.png"
+                  x="-26" y="-12"
+                  width="52" height="52"
+                  filter="url(#logo-glow)"
+                  style={{ mixBlendMode: "screen" as const }}
+                />
+              </g>
             </g>
           </g>
         </g>
