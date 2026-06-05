@@ -328,11 +328,11 @@ export function HeroCubes() {
           <linearGradient id="hc-pright" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#5838b4"/><stop offset="100%" stopColor="#42268c"/></linearGradient>
         </defs>
 
-        {/* constellation lines */}
-        <line x1="360" y1="125" x2="406" y2="265" stroke="rgba(130,89,239,0.07)" strokeWidth="0.6" />
-        <line x1="406" y1="265" x2="234" y2="355" stroke="rgba(77,124,255,0.06)"  strokeWidth="0.6" />
-        <line x1="360" y1="125" x2="480" y2="160" stroke="rgba(77,124,255,0.05)"  strokeWidth="0.6" />
-        <line x1="480" y1="160" x2="406" y2="265" stroke="rgba(130,89,239,0.05)" strokeWidth="0.4" />
+        {/* constellation lines — updated to match tighter positions */}
+        <line x1="360" y1="125" x2="392" y2="220" stroke="rgba(130,89,239,0.07)" strokeWidth="0.6" />
+        <line x1="392" y1="220" x2="248" y2="298" stroke="rgba(77,124,255,0.06)"  strokeWidth="0.6" />
+        <line x1="360" y1="125" x2="464" y2="142" stroke="rgba(77,124,255,0.05)"  strokeWidth="0.6" />
+        <line x1="464" y1="142" x2="392" y2="220" stroke="rgba(130,89,239,0.05)" strokeWidth="0.4" />
 
         {/* large blue — float-a 9s */}
         <g style={{ animation: "float-a 9s ease-in-out infinite", transformOrigin: "360px 125px" }}>
@@ -343,98 +343,13 @@ export function HeroCubes() {
               <polygon points="72,82 144,41 144,91 72,132"  fill="url(#hc-bright)" />
               <polygon points="72,0 144,41 72,82 0,41" fill="none" stroke="rgba(140,180,255,0.5)" strokeWidth="0.8" />
             </g>
-            {/* ── SVG creature — rides float-a + p0 parallax ────────────── */}
-            <g transform="translate(360,44)">
-              {/* patrol: paces left↔right along cube top */}
-              <g style={{ animation: "creature-walk 5s ease-in-out infinite" }}>
-
-                {/* ground shadow — shows it's standing ON the surface */}
-                <ellipse cx="0" cy="2" rx="17" ry="5"
-                  fill="rgba(0,5,50,0.50)" />
-
-                {/* body group — whole creature bobs/waddles */}
-                <g style={{
-                  animation: "creature-bob 0.68s ease-in-out infinite",
-                  transformBox: "fill-box" as const,
-                  transformOrigin: "50% 85%",
-                }}>
-
-                  {/* ── aura crown ─────────────────────────────── */}
-                  <ellipse cx="0" cy="-43" rx="16" ry="6"
-                    fill="rgba(148,96,255,0.52)"
-                    style={{
-                      animation: "aura-breathe 2.4s ease-in-out infinite",
-                      transformBox: "fill-box" as const,
-                      transformOrigin: "50% 50%",
-                    }} />
-                  <rect x="-11" y="-50" width="22" height="8" rx="4"
-                    fill="#c49eff"
-                    filter="url(#crtr-glow)" />
-
-                  {/* ── main body ──────────────────────────────── */}
-                  <rect x="-17" y="-36" width="34" height="28" rx="4"
-                    fill="url(#crtr-body)" />
-                  {/* top-face highlight (3D bevel) */}
-                  <rect x="-17" y="-36" width="34" height="7" rx="4"
-                    fill="rgba(210,180,255,0.38)" />
-                  {/* bottom shadow stripe */}
-                  <rect x="-17" y="-15" width="34" height="7" rx="0 0 4 4"
-                    fill="rgba(0,0,60,0.32)" />
-
-                  {/* ── left eye ───────────────────────────────── */}
-                  <rect x="-14" y="-31" width="11" height="11" rx="2"
-                    fill="#060614" />
-                  <g style={{ animation: "eye-dart 5.5s ease-in-out infinite" }}>
-                    <circle cx="-8.5" cy="-25.5" r="3.4" fill="#88ccff" />
-                    <circle cx="-7"   cy="-27"   r="1.3" fill="rgba(255,255,255,0.75)" />
-                  </g>
-                  {/* left blink lid — scaleY 0→1 covers the eye */}
-                  <rect x="-14" y="-31" width="11" height="11" rx="2"
-                    fill="#7040d8"
-                    style={{
-                      animation: "eye-blink 5s ease-in-out 0.8s infinite",
-                      transformBox: "fill-box" as const,
-                      transformOrigin: "50% 0%",
-                    }} />
-
-                  {/* ── right eye ──────────────────────────────── */}
-                  <rect x="3" y="-31" width="11" height="11" rx="2"
-                    fill="#060614" />
-                  <g style={{ animation: "eye-dart 5.5s ease-in-out 0.65s infinite" }}>
-                    <circle cx="8.5" cy="-25.5" r="3.4" fill="#88ccff" />
-                    <circle cx="10"  cy="-27"   r="1.3" fill="rgba(255,255,255,0.75)" />
-                  </g>
-                  {/* right blink lid */}
-                  <rect x="3" y="-31" width="11" height="11" rx="2"
-                    fill="#7040d8"
-                    style={{
-                      animation: "eye-blink 5s ease-in-out 1.9s infinite",
-                      transformBox: "fill-box" as const,
-                      transformOrigin: "50% 0%",
-                    }} />
-
-                  {/* ── legs (4 stubs, alternating phase) ─────── */}
-                  {([-13, -5, 3, 11] as const).map((lx, i) => (
-                    <rect key={i}
-                      x={lx} y="-8" width="7" height="11" rx="2.5"
-                      fill="url(#crtr-leg)"
-                      style={{
-                        animation: `${i % 2 === 0 ? "leg-step-a" : "leg-step-b"} 0.55s ease-in-out ${i * 0.14}s infinite`,
-                        transformBox: "fill-box" as const,
-                        transformOrigin: "50% 0%",
-                      }} />
-                  ))}
-
-                </g>
-              </g>
-            </g>
           </g>
         </g>
 
-        {/* medium purple — float-b 7s, delay 1.8s */}
-        <g style={{ animation: "float-b 7s ease-in-out 1.8s infinite", transformOrigin: "406px 275px" }}>
+        {/* medium purple — float-b 7s, delay 1.8s — moved up+left */}
+        <g style={{ animation: "float-b 7s ease-in-out 1.8s infinite", transformOrigin: "392px 222px" }}>
           <g ref={p1}>
-            <g filter="url(#hc-glow-md)" transform="translate(354,216)">
+            <g filter="url(#hc-glow-md)" transform="translate(340,175)">
               <polygon points="52,0 104,30 52,60 0,30"    fill="url(#hc-ptop)"  opacity="0.95" />
               <polygon points="0,30 52,60 52,98 0,68"     fill="url(#hc-pleft)" opacity="0.95" />
               <polygon points="52,60 104,30 104,68 52,98"  fill="url(#hc-pright)" opacity="0.95" />
@@ -443,10 +358,10 @@ export function HeroCubes() {
           </g>
         </g>
 
-        {/* small blue — float-c 11s, delay 0.5s */}
-        <g style={{ animation: "float-c 11s ease-in-out 0.5s infinite", transformOrigin: "234px 337px" }}>
+        {/* small blue — float-c 11s, delay 0.5s — moved up+right */}
+        <g style={{ animation: "float-c 11s ease-in-out 0.5s infinite", transformOrigin: "248px 300px" }}>
           <g ref={p2}>
-            <g filter="url(#hc-glow-sm)" transform="translate(196,315)">
+            <g filter="url(#hc-glow-sm)" transform="translate(210,262)">
               <polygon points="38,0 76,22 38,44 0,22"    fill="url(#hc-btop)"  opacity="0.85" />
               <polygon points="0,22 38,44 38,70 0,48"    fill="url(#hc-bleft)" opacity="0.85" />
               <polygon points="38,44 76,22 76,48 38,70"   fill="url(#hc-bright)" opacity="0.85" />
@@ -455,10 +370,10 @@ export function HeroCubes() {
           </g>
         </g>
 
-        {/* tiny purple — float-d 8s, delay 3s */}
-        <g style={{ animation: "float-d 8s ease-in-out 3s infinite", transformOrigin: "480px 154px" }}>
+        {/* tiny purple — float-d 8s, delay 3s — moved left+up */}
+        <g style={{ animation: "float-d 8s ease-in-out 3s infinite", transformOrigin: "464px 142px" }}>
           <g ref={p3}>
-            <g filter="url(#hc-glow-sm)" transform="translate(452,128)">
+            <g filter="url(#hc-glow-sm)" transform="translate(436,118)">
               <polygon points="28,0 56,16 28,32 0,16"    fill="url(#hc-ptop)"  opacity="0.75" />
               <polygon points="0,16 28,32 28,52 0,36"    fill="url(#hc-pleft)" opacity="0.75" />
               <polygon points="28,32 56,16 56,36 28,52"   fill="url(#hc-pright)" opacity="0.75" />
