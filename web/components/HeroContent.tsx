@@ -70,8 +70,8 @@ export function HeroContent() {
             marginBottom: 24,
           }}
         >
-          <span style={{ color: "var(--text)", display: "block" }}>Turn Claude into a</span>
-          <span style={{ color: "var(--text-fade)", display: "block" }}>senior bug hunter</span>
+          <span style={{ color: "var(--text)", display: "block" }}>Turn Claude into </span>
+          <span style={{ color: "var(--text-fade)", display: "block" }}>Bug hunter</span>
         </motion.h1>
 
         {/* Subtitle */}
