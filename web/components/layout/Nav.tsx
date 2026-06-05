@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { BugIcon } from "@/components/icons";
 
 const LINKS = [
   { label: "Skills", href: "/skills" },
@@ -38,8 +38,8 @@ export function Nav() {
         justifyContent: "space-between",
       }}>
         {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <BugIcon size={17} color="var(--accent)" />
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
+          <Image src="/logo.png" alt="cbug" width={28} height={28} style={{ borderRadius: 4 }} />
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 15, fontWeight: 700, color: "var(--text)", letterSpacing: "0.04em" }}>
             cbug
           </span>
