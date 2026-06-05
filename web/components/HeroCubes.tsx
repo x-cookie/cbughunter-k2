@@ -296,10 +296,19 @@ export function HeroCubes() {
         preserveAspectRatio="xMidYMid meet"
         style={{ position: "absolute", inset: 0 }}>
         <defs>
-          <filter id="logo-glow" x="-80%" y="-80%" width="260%" height="260%">
-            <feDropShadow dx="0" dy="0" stdDeviation="7"  floodColor="rgba(130,89,239,0.95)" />
-            <feDropShadow dx="0" dy="6" stdDeviation="12" floodColor="rgba(77,124,255,0.50)" />
+          <filter id="crtr-glow" x="-80%" y="-80%" width="260%" height="260%">
+            <feDropShadow dx="0" dy="0" stdDeviation="6"  floodColor="rgba(140,90,255,0.95)" />
+            <feDropShadow dx="0" dy="5" stdDeviation="14" floodColor="rgba(77,124,255,0.45)" />
           </filter>
+          <linearGradient id="crtr-body" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#9868ff" />
+            <stop offset="55%"  stopColor="#5040cc" />
+            <stop offset="100%" stopColor="#2244cc" />
+          </linearGradient>
+          <linearGradient id="crtr-leg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#6040d0" />
+            <stop offset="100%" stopColor="#1e38c0" />
+          </linearGradient>
           <filter id="hc-glow-lg" x="-60%" y="-60%" width="220%" height="220%">
             <feGaussianBlur stdDeviation="14" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -334,20 +343,89 @@ export function HeroCubes() {
               <polygon points="72,82 144,41 144,91 72,132"  fill="url(#hc-bright)" />
               <polygon points="72,0 144,41 72,82 0,41" fill="none" stroke="rgba(140,180,255,0.5)" strokeWidth="0.8" />
             </g>
-            {/* logo — rides float-a + parallax, mix-blend-mode:screen drops the black bg */}
-            <g transform="translate(360,0)" style={{ transformBox: "fill-box" }}>
-              <g style={{
-                animation: "logo-scale 3.2s ease-in-out 0.6s infinite",
-                transformOrigin: "0px 22px",
-                transformBox: "fill-box",
-              }}>
-                <image
-                  href="/logo.png"
-                  x="-26" y="-12"
-                  width="52" height="52"
-                  filter="url(#logo-glow)"
-                  style={{ mixBlendMode: "screen" as const }}
-                />
+            {/* ── SVG creature — rides float-a + p0 parallax ────────────── */}
+            <g transform="translate(360,44)">
+              {/* patrol: paces left↔right along cube top */}
+              <g style={{ animation: "creature-walk 5s ease-in-out infinite" }}>
+
+                {/* ground shadow — shows it's standing ON the surface */}
+                <ellipse cx="0" cy="2" rx="17" ry="5"
+                  fill="rgba(0,5,50,0.50)" />
+
+                {/* body group — whole creature bobs/waddles */}
+                <g style={{
+                  animation: "creature-bob 0.68s ease-in-out infinite",
+                  transformBox: "fill-box" as const,
+                  transformOrigin: "50% 85%",
+                }}>
+
+                  {/* ── aura crown ─────────────────────────────── */}
+                  <ellipse cx="0" cy="-43" rx="16" ry="6"
+                    fill="rgba(148,96,255,0.52)"
+                    style={{
+                      animation: "aura-breathe 2.4s ease-in-out infinite",
+                      transformBox: "fill-box" as const,
+                      transformOrigin: "50% 50%",
+                    }} />
+                  <rect x="-11" y="-50" width="22" height="8" rx="4"
+                    fill="#c49eff"
+                    filter="url(#crtr-glow)" />
+
+                  {/* ── main body ──────────────────────────────── */}
+                  <rect x="-17" y="-36" width="34" height="28" rx="4"
+                    fill="url(#crtr-body)" />
+                  {/* top-face highlight (3D bevel) */}
+                  <rect x="-17" y="-36" width="34" height="7" rx="4"
+                    fill="rgba(210,180,255,0.38)" />
+                  {/* bottom shadow stripe */}
+                  <rect x="-17" y="-15" width="34" height="7" rx="0 0 4 4"
+                    fill="rgba(0,0,60,0.32)" />
+
+                  {/* ── left eye ───────────────────────────────── */}
+                  <rect x="-14" y="-31" width="11" height="11" rx="2"
+                    fill="#060614" />
+                  <g style={{ animation: "eye-dart 5.5s ease-in-out infinite" }}>
+                    <circle cx="-8.5" cy="-25.5" r="3.4" fill="#88ccff" />
+                    <circle cx="-7"   cy="-27"   r="1.3" fill="rgba(255,255,255,0.75)" />
+                  </g>
+                  {/* left blink lid — scaleY 0→1 covers the eye */}
+                  <rect x="-14" y="-31" width="11" height="11" rx="2"
+                    fill="#7040d8"
+                    style={{
+                      animation: "eye-blink 5s ease-in-out 0.8s infinite",
+                      transformBox: "fill-box" as const,
+                      transformOrigin: "50% 0%",
+                    }} />
+
+                  {/* ── right eye ──────────────────────────────── */}
+                  <rect x="3" y="-31" width="11" height="11" rx="2"
+                    fill="#060614" />
+                  <g style={{ animation: "eye-dart 5.5s ease-in-out 0.65s infinite" }}>
+                    <circle cx="8.5" cy="-25.5" r="3.4" fill="#88ccff" />
+                    <circle cx="10"  cy="-27"   r="1.3" fill="rgba(255,255,255,0.75)" />
+                  </g>
+                  {/* right blink lid */}
+                  <rect x="3" y="-31" width="11" height="11" rx="2"
+                    fill="#7040d8"
+                    style={{
+                      animation: "eye-blink 5s ease-in-out 1.9s infinite",
+                      transformBox: "fill-box" as const,
+                      transformOrigin: "50% 0%",
+                    }} />
+
+                  {/* ── legs (4 stubs, alternating phase) ─────── */}
+                  {([-13, -5, 3, 11] as const).map((lx, i) => (
+                    <rect key={i}
+                      x={lx} y="-8" width="7" height="11" rx="2.5"
+                      fill="url(#crtr-leg)"
+                      style={{
+                        animation: `${i % 2 === 0 ? "leg-step-a" : "leg-step-b"} 0.55s ease-in-out ${i * 0.14}s infinite`,
+                        transformBox: "fill-box" as const,
+                        transformOrigin: "50% 0%",
+                      }} />
+                  ))}
+
+                </g>
               </g>
             </g>
           </g>
