@@ -4,7 +4,7 @@ import { CubeAccent } from "@/components/CubeAccent";
 const SECONDARY = [
   { num: "8",   suffix: "",  label: "Attack domains" },
   { num: "15",  suffix: "",  label: "Slash commands" },
-  { num: "574", suffix: "+", label: "H1 patterns sourced" },
+  { num: "574", suffix: "", label: "H1 patterns sourced" },
 ];
 
 export function StatsStrip() {

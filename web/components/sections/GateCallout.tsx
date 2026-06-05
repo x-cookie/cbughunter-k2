@@ -71,7 +71,7 @@ export function GateCallout() {
           <ScrollReveal delay={0.1}>
             <Link
               href="/docs/7-question-gate"
-              style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "rgba(240,240,255,0.25)", textDecoration: "none", letterSpacing: "0.04em", display: "inline-flex", alignItems: "center", gap: 8 }}
+              style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "rgba(130,89,239,0.85)", textDecoration: "none", letterSpacing: "0.04em", display: "inline-flex", alignItems: "center", gap: 8, textShadow: "0 0 14px rgba(130,89,239,0.60), 0 0 28px rgba(130,89,239,0.25)" }}
             >
               Read the full gate <ArrowRight size={9} />
             </Link>

@@ -2,7 +2,7 @@
 
 # cbug
 
-<img src="docs/logo.png" alt="cbug logo" width="96" />
+<img src="docs/logo.png" alt="cbug logo" width="142" />
 
 **51 specialized Claude skills for bug hunting, web security, and external red-team workflows.**
 
