@@ -141,7 +141,7 @@ export function HeroCubes() {
 
     // ── canvas size ──────────────────────────────────────────────────────
     const pcubes: PCube[] = [];
-    let spawnIn  = 1800 + Math.random() * 1800;
+    let spawnIn  = 600 + Math.random() * 600;
     let spawnAcc = 0;
 
     const resize = () => {
@@ -151,7 +151,14 @@ export function HeroCubes() {
       canvas.height = Math.round(height);
       if (!sizeOk.current) {
         sizeOk.current = true;
-        pcubes.push(makeMain(canvas.width, canvas.height));
+        // seed with several cubes at staggered x positions
+        for (let i = 0; i < 5; i++) {
+          const c = makeMain(canvas.width, canvas.height);
+          c.x = -c.hw * 3 + (canvas.width / 5) * i * 0.6; // spread across entry
+          c.opacity = 0.2 + Math.random() * 0.5;           // already partially visible
+          c.fadeIn = true;
+          pcubes.push(c);
+        }
       }
     };
     resize();
@@ -208,8 +215,8 @@ export function HeroCubes() {
       spawnAcc += dt;
       if (spawnAcc >= spawnIn) {
         spawnAcc = 0;
-        spawnIn  = 1800 + Math.random() * 2000;
-        if (pcubes.filter(c => !c.fragment && !c.dead).length < 4)
+        spawnIn  = 600 + Math.random() * 700;
+        if (pcubes.filter(c => !c.fragment && !c.dead).length < 10)
           pcubes.push(makeMain(W, H));
       }
 
