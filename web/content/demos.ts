@@ -1,21 +1,23 @@
 export const skillDemos: Record<string, string> = {
-  "web-hunting/hunt-sqli": "PENDING",
-  "web-hunting/hunt-xss": "PENDING",
-  "auth/hunt-oauth": "PENDING",
-  "auth/hunt-jwt": "PENDING",
-  "api-infra/hunt-api-misconfig": "PENDING",
-  "api-infra/hunt-cloud-misconfig": "PENDING",
-  "enterprise/cloud-iam-deep": "PENDING",
-  "red-team/apk-redteam-pipeline": "PENDING",
-  "red-team/supply-chain-attack-recon": "PENDING",
-  "recon/osint-methodology": "PENDING",
-  "reporting/triage-validation": "PENDING",
-  "reporting/report-writing": "PENDING",
-  "reporting/evidence-hygiene": "PENDING",
-  "specialized/web3-audit": "PENDING",
+  "web-hunting/hunt-xss":                "V58X4GdRdAc",
+  "web-hunting/hunt-csrf":               "x15zzN5wv6A",
+  "auth-identity/hunt-auth-bypass":      "x7QwiHyBjqI",
+  "auth-identity/hunt-mfa-bypass":       "Jlx70Yu7PMY",
+  "api-infra/hunt-graphql":              "Iqsu0TJ1IDc",
+  "api-infra/hunt-api-misconfig":        "KLDVbIPoXOg",
+  "enterprise/cloud-iam-deep":           "rCVaLt6OHeE",
+  "enterprise/hunt-sharepoint":          "RWacLoOR9q8",
+  "red-team/redteam-mindset":            "stViMe2AItg",
+  "red-team/supply-chain-attack-recon":  "-tBz99CzU9s",
+  "recon-osint/offensive-osint":         "yfYNJwgbz0s",
+  "recon-osint/hunt-subdomain":          "Lxl585bed9w",
+  "reporting/triage-validation":         "WBVyUIN-Nt4",
+  "reporting/report-writing":            "sKi-h9gRTJQ",
+  "specialized/web3-audit":              "zJvHObaszPM",
+  "specialized/meme-coin-audit":         "4ejjOlkBNJ0",
 };
 
 export function getDemoId(skillId: string): string | null {
   const id = skillDemos[skillId];
-  return id && id !== "PENDING" ? id : null;
+  return id ?? null;
 }
