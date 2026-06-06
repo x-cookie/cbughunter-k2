@@ -103,6 +103,7 @@ function DomainPage({ domainSlug }: { domainSlug: string }) {
           >
             {domainSkills.map((skill) => {
               const env = ENV_STYLE[skill.env];
+              const hasDemo = !!getDemoId(skill.id);
               return (
                 <ScrollRevealItem key={skill.id} style={{ height: "100%" }}>
                   <Link
@@ -153,7 +154,13 @@ function DomainPage({ domainSlug }: { domainSlug: string }) {
                           {skill.reportCount} reports
                         </span>
                       )}
-                      <ArrowRight size={8} />
+                      {hasDemo && (
+                        <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "var(--font-mono)", fontSize: 9, color: "#ef4444", background: "rgba(239,68,68,0.1)", padding: "2px 7px", borderRadius: 4, letterSpacing: "0.04em", marginLeft: "auto" }}>
+                          <svg width="7" height="8" viewBox="0 0 7 8" fill="currentColor"><path d="M0 0l7 4-7 4V0z"/></svg>
+                          demo
+                        </span>
+                      )}
+                      {!hasDemo && <span style={{ marginLeft: "auto", display: "flex" }}><ArrowRight size={8} /></span>}
                     </div>
                   </Link>
                 </ScrollRevealItem>
